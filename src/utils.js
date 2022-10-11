@@ -3,22 +3,29 @@
 //   DATA IS THE SAME JUST A DIFFERENT URL,
 //   DOES NOT AFFECT PROJECT FUNCTIONALITY
 
-const allProductsUrl = 'https://course-api.com/javascript-store-products'
+const allProductsUrl = "https://course-api.com/javascript-store-products";
 // temporary single product
 // 'https://course-api.com/javascript-store-single-product?id=rec43w3ipXvP28vog'
 const singleProductUrl =
-  'https://course-api.com/javascript-store-single-product'
+  "https://course-api.com/javascript-store-single-product";
 
 const getElement = (selection) => {
-  const element = document.querySelector(selection)
-  if (element) return element
-  throw new Error(`Please check "${selection}" selector, no such element exist`)
-}
+  const element = document.querySelector(selection);
+  if (element) return element;
+  throw new Error(
+    `Please check "${selection}" selector, no such element exist`
+  );
+};
 
-const formatPrice = () => {}
+const formatPrice = () => {};
 
-const getStorageItem = () => {}
-const setStorageItem = () => {}
+const getStorageItem = (item) => {
+  return localStorage.getItem(item) ? localStorage.getItem(item) : [];
+};
+
+const setStorageItem = (name, item) => {
+  localStorage.setItem(name, JSON.stringify(item));
+};
 
 export {
   allProductsUrl,
@@ -27,4 +34,4 @@ export {
   formatPrice,
   getStorageItem,
   setStorageItem,
-}
+};
