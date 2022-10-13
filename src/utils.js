@@ -26,7 +26,9 @@ const formatPrice = (price) => {
 };
 
 const getStorageItem = (item) => {
-  return localStorage.getItem(item) ? localStorage.getItem(item) : [];
+  return localStorage.getItem(item)
+    ? JSON.parse(localStorage.getItem(item))
+    : [];
 };
 
 const setStorageItem = (name, item) => {
