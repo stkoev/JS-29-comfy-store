@@ -24,8 +24,44 @@ let productID;
 // show product when page loads
 window.addEventListener("DOMContentLoaded", async () => {
   const urlID = window.location.search;
-  const response = await fetch(`${singleProductUrl}${urlID}`);
-  const data = await response.json();
+  try {
+    const response = await fetch(`${singleProductUrl}${urlID}`);
+    if (response.status >= 200 && response.status <= 299) {
+      const product = await response.json();
 
-  loading.style.dipslay = "none";
+      // display product
+      // grab data
+      const { id, fields } = product;
+      productID = id;
+      const { name, company, price, colors, description } = fields;
+
+      // set values
+      const image = fields.image[0].thumbnails.large.url;
+      pageTitleDOM.textContent = `Home / ${name}`;
+      document.title = `${name.toUpperCase()} | Comfy`;
+      imgDOM.src = image;
+      titleDOM.textContent = name;
+      companyDOM.textContent = `by ${company}`;
+      priceDOM.textContent = formatPrice(price);
+      descDOM.textContent = description;
+      colors.forEach((color) => {
+        const span = document.createElement("span");
+        span.classList.add("product-color");
+        span.style.backgroundColor = color;
+        colorsDOM.appendChild(span);
+      });
+    } else {
+      centerDOM.innerHTML = `<div>
+            <h3 class="error">sorry something went wrong</h3>
+            <a href="index.html" class="btn">back home</a>
+        </div>`;
+    }
+  } catch (error) {
+    console.log(error);
+  }
+  loading.style.display = "none";
+});
+
+cartBtn.addEventListener("click", function () {
+  addToCart(productID);
 });
