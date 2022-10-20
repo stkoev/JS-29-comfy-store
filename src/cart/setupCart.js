@@ -28,9 +28,30 @@ export const addToCart = (id) => {
   } else {
     // update values
   }
+  // add one to the item
+  displayCartItemCount();
+  // display cart totals
+  displayCartTotal();
+  // calculate totals
 
+  // set cart in the local storage
+  setStorageItem("cart", cart);
   openCart();
 };
+
+function displayCartItemCount() {
+  const amount = cart.reduce((total, cartItem) => {
+    return (total += cartItem.amount);
+  }, 0);
+  cartItemCountDom.textContent = amount;
+}
+
+function displayCartTotal() {
+  const total = cart.reduce((total, cartItem) => {
+    return (total += cartItem.price * cartItem.amount);
+  }, 0);
+  cartTotalDom.textContent = `Total : ${formatPrice(total)}`;
+}
 
 const init = () => {
   console.log(cart);
