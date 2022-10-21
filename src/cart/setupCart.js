@@ -74,6 +74,17 @@ function increaseAmount(id) {
   });
   return newAmount;
 }
+function decreaseAmount(id) {
+  let newAmount;
+  cart = cart.map((cartItem) => {
+    if (cartItem.id === id) {
+      newAmount = cartItem.amount - 1;
+      cartItem = { ...cartItem, amount: newAmount };
+    }
+    return cartItem;
+  });
+  return newAmount;
+}
 
 function displayCartItemsDOM() {
   cart.forEach((cartItem) => {
@@ -99,6 +110,15 @@ function setupCartFunctionality() {
       parent.nextElementSibling.textContent = newAmount;
     }
     // decrese
+    if (parent.classList.contains("cart-item-decrease-btn")) {
+      const newAmount = decreaseAmount(parentID);
+      if (newAmount === 0) {
+        removeItem(id);
+        parent.parentElement.parentElement.remove();
+      } else {
+        parent.previousElementSibling.textContent = newAmount;
+      }
+    }
 
     displayCartItemCount();
     displayCartTotal();
